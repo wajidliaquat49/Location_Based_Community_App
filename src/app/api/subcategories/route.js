@@ -4,19 +4,17 @@ import { CategoryModal } from "@/lib/models/Category";
 
 export async function GET(request) {
   await connectDB();
-  const subCategories = await subCategoryModal.find();
 
-  // const reqUrl = request.url
-  // const { searchParams } = new URL(reqUrl);
-  // const query = {};
-  // if (searchParams.get("category")) {
-  //   query.category = searchParams.get("category");
-  // }
+  const reqUrl = request.url;
+  const { searchParams } = new URL(reqUrl);
+  const query = {};
+  if (searchParams.get("category")) {
+    query.category = searchParams.get("category");
+  }
 
-  // const subCategories = await SubCategoryModal.find(query).populate(
-  //   "category",
-  //   "title"
-  // );
+  const subCategories = await subCategoryModal
+    .find(query)
+    .populate("category", "title");
 
   return Response.json(
     {
