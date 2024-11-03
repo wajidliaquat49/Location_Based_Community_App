@@ -30,11 +30,21 @@
 //   );
 // }
 
+import { redirect } from "next/navigation";
 import { auth, signOut } from "../../auth";
 import Link from "next/link";
 
 export default async function Home() {
   const session = await auth();
+
+  // const session = await auth();
+  // console.log("session==>", session);
+
+  // if (session) {
+  //   if (session.user.role == "user") redirect("/");
+  //   if (session.user.role == "admin") redirect("/admin/dashboard");
+  // }
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
       <h1 className="font-bold text-4xl text-center text-blue-600 mb-10">

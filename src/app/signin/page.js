@@ -6,7 +6,10 @@ export default async function Signin() {
   const session = await auth();
   console.log("session==>", session);
 
-  if (session) redirect("/");
+  if (session) {
+    if (session.user.role == "user") redirect("/");
+    if (session.user.role == "admin") redirect("/admin/dashboard");
+  }
 
   return (
     <div className="flex items-center justify-center container mx-auto min-h-screen bg-gray-100">
