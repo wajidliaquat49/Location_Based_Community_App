@@ -11,11 +11,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [Google, GitHub],
 
   callbacks: {
-    async signIn({ account, profile }) {
+    async signIn({ profile }) {
       return { ...profile, role: "user" };
     },
 
-    async jwt({ token, user, profile }) {
+    async jwt({ token }) {
       const loginToMyServer = await login(token.email);
 
       token.role = loginToMyServer.role;

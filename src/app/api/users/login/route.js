@@ -27,9 +27,6 @@ export async function POST(request) {
   const hashedPassword = await bcrypt.hash(obj.password, saltRounds);
   obj.password = hashedPassword;
 
-  //   let newUser = await new UserModal(obj);
-  //   await newUser.save();
-
   var token = jwt.sign({ _id: user._id, role: user.role }, process.env.JWT_KEY);
 
   //   console.log("obj===>", obj);

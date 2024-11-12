@@ -1,4 +1,7 @@
+import { getCategories } from "@/actions/categories";
+import { getSubCategories } from "@/actions/subcategories";
 import { AddSubCategory } from "@/components/AddSubCategory/AddSubCategory";
+import CategoryDropdown from "@/components/CategoryDropdown/CategoryDropdown";
 import {
   Table,
   TableBody,
@@ -11,55 +14,19 @@ import {
 
 import Image from "next/image";
 
-const subcategories = [
-  {
-    title: "Artificial Intelligence (AI)",
-    category: "Technology",
-    thumbnail:
-      "https://images.unsplash.com/photo-1625314868143-20e93ce3ff33?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8QXJ0aWZpY2lhbCUyMEludGVsbGlnZW5jZSUyMChBSSl8ZW58MHx8MHx8fDA%3D",
-    description:
-      "Enabling machines to simulate human intelligence through learning, reasoning, and problem-solving...",
-  },
-  {
-    title: "Online Learning",
-    category: "Education",
-    thumbnail:
-      "https://images.unsplash.com/photo-1597933471507-1ca5765185d8?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8T25saW5lJTIwTGVhcm5pbmd8ZW58MHx8MHx8fDA%3D",
-    description:
-      "Providing flexible, accessible education through digital platforms and virtual classrooms...",
-  },
-  {
-    title: "Mental Health",
-    category: "Health & Wellness",
-    thumbnail:
-      "https://images.unsplash.com/photo-1564121211835-e88c852648ab?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8TWVudGFsJTIwSGVhbHRofGVufDB8fDB8fHww",
-    description:
-      "Focusing on emotional, psychological, and social well-being to improve quality of life...",
-  },
-  {
-    title: "Personal Finance",
-    category: "Finance",
-    thumbnail:
-      "https://images.unsplash.com/photo-1705948733110-74e45eb7a4ce?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8UGVyc29uYWwlMjBGaW5hbmNlfGVufDB8fDB8fHww",
-    description:
-      "Managing individual financial activities, including budgeting, saving, and investing for future goals...",
-  },
-  {
-    title: "Streaming Services",
-    category: "	Entertainment",
-    thumbnail:
-      "https://images.unsplash.com/photo-1717295248358-4b8f2c8989d6?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8U3RyZWFtaW5nJTIwU2VydmljZXN8ZW58MHx8MHx8fDA%3D",
-    description:
-      "Providing on-demand access to movies, TV shows, and music through online platforms...",
-  },
-];
+export default async function SubCategories({ searchParams }) {
+  console.log("searchParams=>", searchParams);
 
-export default function Categories() {
+  const subcategories = await getSubCategories(searchParams?.category);
+  const categories = (await getCategories()).categories;
   return (
     <div className="min-h-screen mx-10 px-1">
       <div className="flex justify-between items-center my-4">
         <h1 className="font-bold text-xl">SubCategories</h1>
-        <AddSubCategory />
+        <div className="flex gap-3">
+          <CategoryDropdown categories={categories} />
+          <AddSubCategory categories={categories} />
+        </div>
       </div>
 
       <Table>
@@ -73,20 +40,22 @@ export default function Categories() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {subcategories.map((category) => (
-            <TableRow key={category.title}>
+          {subcategories?.subCategories?.map((subCat) => (
+            <TableRow key={subCat.title}>
               <TableCell className="text-right">
                 <Image
-                  src={category.thumbnail}
+                  src={subCat.thumbnail}
                   style={{ objectFit: "cover" }}
                   height={40}
                   width={40}
                 />
               </TableCell>
-              <TableCell className="font-medium">{category.category}</TableCell>
-              <TableCell className="font-medium">{category.title}</TableCell>
               <TableCell className="font-medium">
-                {category.description}
+                {subCat.category?.title}
+              </TableCell>
+              <TableCell className="font-medium">{subCat.title}</TableCell>
+              <TableCell className="font-medium">
+                {subCat.description}
               </TableCell>
             </TableRow>
           ))}

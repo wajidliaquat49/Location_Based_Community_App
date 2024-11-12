@@ -1,49 +1,8 @@
-// import { auth, signOut } from "../../auth";
-// import Link from "next/link";
-
-// export default async function Home() {
-//   const session = await auth();
-//   return (
-//     <div className="min-h-screen">
-//       <h1 className="font-bold text-3xl p-20 text-center">Find Your Friends</h1>
-//       {session ? (
-//         <div>
-//           <h1>User is Login with {session?.user?.email}</h1>
-//           <form
-//             action={async () => {
-//               "use server";
-//               await signOut();
-//             }}
-//           >
-//             <button
-//               type="submit"
-//               className="px-6 py-2 bg-red-500 text-white rounded-full font-semibold hover:bg-red-600 transition duration-300"
-//             >
-//               Sign Out
-//             </button>
-//           </form>
-//         </div>
-//       ) : (
-//         <Link href={"/signin"}> Login To Continue </Link>
-//       )}
-//     </div>
-//   );
-// }
-
-import { redirect } from "next/navigation";
 import { auth, signOut } from "../../auth";
 import Link from "next/link";
 
 export default async function Home() {
   const session = await auth();
-
-  // const session = await auth();
-  // console.log("session==>", session);
-
-  // if (session) {
-  //   if (session.user.role == "user") redirect("/");
-  //   if (session.user.role == "admin") redirect("/admin/dashboard");
-  // }
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
