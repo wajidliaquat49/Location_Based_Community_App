@@ -6,6 +6,7 @@ const eventSchema = new Schema({
   description: String,
   startTime: String,
   endTime: String,
+  thumbnail: String,
   startDate: String,
   endDate: String,
 
@@ -16,6 +17,8 @@ const eventSchema = new Schema({
 
   address: String,
   createdBy: { type: mongoose.Types.ObjectId, ref: "Users" },
+  category: { type: mongoose.Types.ObjectId, ref: "Categories" },
+  subcategory: { type: mongoose.Types.ObjectId, ref: "subCategories" },
   going: [{ type: mongoose.Types.ObjectId, ref: "Users" }],
 });
 
